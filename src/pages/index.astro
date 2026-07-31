@@ -1,0 +1,91 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const songs = (await getCollection('songs')).sort((a, b) => {
+	const aNum = a.data.number ?? Number.POSITIVE_INFINITY;
+	const bNum = b.data.number ?? Number.POSITIVE_INFINITY;
+	if (aNum !== bNum) return aNum - bNum;
+	return a.data.title.localeCompare(b.data.title, 'pt-BR');
+});
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="IPB Med" description="Letras de músicas da Igreja Presbiteriana de Medianeira.">
+	<header class="site-header">
+		<a class="brand" href={base}>
+			IPB Med
+			<span>Letras</span>
+		</a>
+		<p class="tagline">Letras para o culto da Igreja Presbiteriana de Medianeira.</p>
+	</header>
+
+	<div class="search">
+		<label class="visually-hidden" for="song-search">Buscar música</label>
+		<input
+			id="song-search"
+			type="search"
+			placeholder="Buscar por título, número ou tag…"
+			autocomplete="off"
+			inputmode="search"
+			data-song-search
+		/>
+	</div>
+
+	<ul class="song-list" role="list">
+		{
+			songs.map((song) => {
+				const search = [song.data.title, song.data.number, ...(song.data.tags ?? [])]
+					.filter(Boolean)
+					.join(' ')
+					.toLowerCase();
+
+				return (
+					<li data-song-item data-search={search}>
+						<a class="song-link" href={`${base}musica/${song.id}/`}>
+							{song.data.number !== undefined ? (
+								<span class="song-number">{song.data.number}</span>
+							) : (
+								<span class="song-number" aria-hidden="true">
+									·
+								</span>
+							)}
+							<span>
+								<span class="song-title">{song.data.title}</span>
+								{song.data.tags.length > 0 && (
+									<span class="song-tags">
+										{song.data.tags.map((tag) => (
+											<span class="tag">{tag}</span>
+										))}
+									</span>
+								)}
+							</span>
+						</a>
+					</li>
+				);
+			})
+		}
+	</ul>
+
+	<p class="empty-state" data-empty-state hidden>Nenhuma música encontrada.</p>
+</BaseLayout>
+
+<style>
+	.visually-hidden {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+</style>
+
+<script>
+	import { initSongSearch } from '../scripts/search';
+	initSongSearch();
+</script>
