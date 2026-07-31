@@ -492,13 +492,118 @@ html[data-list-view='repertorio'] .fav-actions:not([hidden]) {
 	line-height: 1.4;
 }
 
+.fav-action-row {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0.4rem;
+}
+
+.fav-share,
 .fav-clear {
 	width: 100%;
 }
 
+.fav-share:disabled,
 .fav-clear:disabled {
 	opacity: 0.45;
 	cursor: not-allowed;
+}
+
+.rep-import-dialog {
+	border: 1px solid var(--line);
+	border-radius: 16px;
+	padding: 0;
+	background: var(--surface);
+	color: var(--ink);
+	max-width: min(22rem, calc(100vw - 2rem));
+	box-shadow: 0 18px 40px rgba(20, 32, 30, 0.18);
+}
+
+.rep-import-dialog::backdrop {
+	background: rgba(10, 20, 18, 0.45);
+}
+
+.rep-import-panel {
+	display: grid;
+	gap: 0.85rem;
+	padding: 1.15rem 1.1rem 1.1rem;
+}
+
+.rep-import-title {
+	margin: 0;
+	font-family: var(--font-display);
+	font-size: 1.25rem;
+	font-weight: 650;
+	color: var(--brand-deep);
+}
+
+.rep-import-text {
+	margin: 0;
+	color: var(--ink-soft);
+	font-size: 0.95rem;
+	line-height: 1.45;
+}
+
+.rep-import-actions {
+	display: grid;
+	gap: 0.4rem;
+}
+
+.rep-share-field {
+	display: grid;
+	gap: 0.35rem;
+}
+
+.rep-share-label {
+	font-size: 0.88rem;
+	font-weight: 600;
+	color: var(--ink-soft);
+}
+
+.rep-share-field input {
+	appearance: none;
+	width: 100%;
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	background: rgba(255, 255, 255, 0.75);
+	color: var(--ink);
+	font: inherit;
+	font-size: 0.95rem;
+	padding: 0.7rem 0.8rem;
+}
+
+.rep-share-field input:focus {
+	outline: 2px solid var(--focus);
+	outline-offset: 1px;
+	border-color: var(--brand);
+}
+
+html[data-contrast='escuro'] .rep-share-field input {
+	background: rgba(255, 255, 255, 0.06);
+}
+
+.rep-share-list-heading {
+	margin: 0;
+	font-size: 0.88rem;
+	font-weight: 600;
+	color: var(--ink-soft);
+}
+
+.rep-share-list {
+	margin: 0;
+	padding: 0.65rem 0.65rem 0.65rem 1.6rem;
+	max-height: min(40vh, 14rem);
+	overflow: auto;
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	background: var(--surface-2);
+	color: var(--ink);
+	font-size: 0.9rem;
+	line-height: 1.4;
+}
+
+.rep-share-list li + li {
+	margin-top: 0.35rem;
 }
 
 .kind-filters {

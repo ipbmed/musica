@@ -6,6 +6,7 @@ import {
 	moveFavorite,
 	removeFavorite,
 } from './favorites';
+import { consumeSharedRepertoire, shareCurrentRepertoire } from './shareRepertoire';
 
 type KindFilter = 'todos' | 'hino' | 'cantico';
 type SortMode = 'numero' | 'titulo';
@@ -201,6 +202,10 @@ export function initSongSearch() {
 		});
 	}
 
+	document.querySelector('[data-fav-share]')?.addEventListener('click', () => {
+		void shareCurrentRepertoire();
+	});
+
 	document.querySelector('[data-fav-clear]')?.addEventListener('click', () => {
 		if (loadFavorites().length === 0) return;
 		if (!confirm('Limpar todo o repertório?')) return;
@@ -237,4 +242,12 @@ export function initSongSearch() {
 	syncViewChrome();
 	syncLetterAvailability();
 	apply();
+
+	void consumeSharedRepertoire().then((imported) => {
+		if (!imported) return;
+		favoritesOnly = true;
+		syncViewChrome();
+		syncLetterAvailability();
+		apply();
+	});
 }

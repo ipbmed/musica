@@ -1,5 +1,5 @@
 /* IPB Med Música — service worker (cache básico para instalação PWA) */
-const CACHE = 'ipbmed-musica-v2';
+const CACHE = 'ipbmed-musica-v1';
 const PRECACHE = ['./manifest.webmanifest', './logo.png', './icons/icon-192.png', './icons/icon-512.png'];
 
 self.addEventListener('install', (event) => {

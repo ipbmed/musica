@@ -93,8 +93,11 @@ const homeHref = withBase();
 		</div>
 
 		<div class="fav-actions" data-fav-actions hidden>
-			<p class="fav-hint">Repertório neste aparelho. Use as setas para ordenar.</p>
-			<button type="button" class="filter-btn fav-clear" data-fav-clear disabled>Limpar repertório</button>
+			<p class="fav-hint">Até 20 músicas neste aparelho. Use as setas para ordenar ou compartilhe o link.</p>
+			<div class="fav-action-row">
+				<button type="button" class="filter-btn fav-share" data-fav-share disabled>Compartilhar</button>
+				<button type="button" class="filter-btn fav-clear" data-fav-clear disabled>Limpar</button>
+			</div>
 		</div>
 	</div>
 
@@ -179,6 +182,52 @@ const homeHref = withBase();
 	</ul>
 
 	<p class="empty-state" data-empty-state hidden>Nenhuma música encontrada.</p>
+
+	<dialog class="rep-import-dialog" data-rep-share>
+		<form method="dialog" class="rep-import-panel">
+			<h2 class="rep-import-title">Compartilhar repertório</h2>
+			<p class="rep-import-text">
+				Será gerado um texto com a lista de músicas e um link. Quem abrir o link poderá
+				importar este repertório no app.
+			</p>
+			<label class="rep-share-field">
+				<span class="rep-share-label">Finalidade (opcional)</span>
+				<input
+					type="text"
+					name="finalidade"
+					maxlength="80"
+					placeholder="Ex.: Culto domingo, Casamento…"
+					autocomplete="off"
+					data-rep-share-purpose
+				/>
+			</label>
+			<p class="rep-share-list-heading">Músicas</p>
+			<ol class="rep-share-list" data-rep-share-list></ol>
+			<div class="rep-import-actions">
+				<button type="submit" class="filter-btn fav-share" value="share">Compartilhar</button>
+				<button type="submit" class="filter-btn fav-clear" value="cancel">Cancelar</button>
+			</div>
+		</form>
+	</dialog>
+
+	<dialog class="rep-import-dialog" data-rep-import>
+		<form method="dialog" class="rep-import-panel">
+			<h2 class="rep-import-title">Importar repertório</h2>
+			<p class="rep-import-text" data-rep-import-purpose-wrap hidden>
+				Finalidade: <strong data-rep-import-purpose></strong>
+			</p>
+			<p class="rep-import-text">
+				Já existem músicas no repertório. O link traz
+				<strong data-rep-import-count>0</strong>
+				música(s). O que deseja fazer?
+			</p>
+			<div class="rep-import-actions">
+				<button type="submit" class="filter-btn fav-share" value="add">Adicionar novas</button>
+				<button type="submit" class="filter-btn" value="replace">Substituir existentes</button>
+				<button type="submit" class="filter-btn fav-clear" value="cancel">Cancelar</button>
+			</div>
+		</form>
+	</dialog>
 </BaseLayout>
 
 <style>
