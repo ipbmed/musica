@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../lib/paths';
+
 interface SongItem {
 	id: string;
 	title: string;
@@ -12,7 +14,6 @@ interface Props {
 }
 
 const { songs, currentId } = Astro.props;
-const base = import.meta.env.BASE_URL;
 const alphabet = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
 
 function titleLetter(title: string) {
@@ -108,7 +109,7 @@ function titleLetter(title: string) {
 						>
 							<a
 								class:list={['drawer-link', { 'is-current': current }]}
-								href={`${base}musica/${song.id}/`}
+								href={withBase(`musica/${song.id}/`)}
 								aria-current={current ? 'page' : undefined}
 							>
 								<span class="drawer-number">

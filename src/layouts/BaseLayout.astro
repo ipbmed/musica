@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { withBase } from '../lib/paths';
 
 interface Props {
 	title: string;
@@ -13,18 +14,24 @@ const {
 	home = false,
 } = Astro.props;
 const pageTitle = title === 'IPB Med' ? 'IPB Med · Letras' : `${title} · IPB Med`;
-const base = import.meta.env.BASE_URL;
+const base = withBase();
 ---
 
 <!doctype html>
 <html lang="pt-BR">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/png" href={`${base}favicon-ipb.png`} />
-		<link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
-		<link rel="icon" href={`${base}favicon.ico`} />
+		<link rel="icon" type="image/png" sizes="32x32" href={withBase('favicon.png')} />
+		<link rel="icon" type="image/png" sizes="192x192" href={withBase('icons/icon-192.png')} />
+		<link rel="shortcut icon" href={withBase('favicon.ico')} />
+		<link rel="apple-touch-icon" href={withBase('apple-touch-icon.png')} />
+		<link rel="manifest" href={withBase('manifest.webmanifest')} />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="theme-color" content="#fafbfa" />
+		<meta name="theme-color" content="#0f5c52" />
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+		<meta name="apple-mobile-web-app-title" content="IPB Med" />
 		<meta name="description" content={description} />
 		<meta name="generator" content={Astro.generator} />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -53,7 +60,7 @@ const base = import.meta.env.BASE_URL;
 			home && (
 				<section class="church-hero" aria-label="Fachada da igreja">
 					<img
-						src={`${base}images/igreja.jpg`}
+						src={withBase('images/igreja.jpg')}
 						alt="Fachada da Igreja Presbiteriana de Medianeira"
 						width="1600"
 						height="900"
@@ -68,7 +75,7 @@ const base = import.meta.env.BASE_URL;
 				home && (
 					<footer class="site-footer">
 						<div class="footer-brand">
-							<img class="logo logo--footer" src={`${base}logo.png`} alt="Igreja Presbiteriana do Brasil" width="44" height="36" />
+							<img class="logo logo--footer" src={withBase('logo.png')} alt="Igreja Presbiteriana do Brasil" width="44" height="36" />
 							<p>
 								<strong>IPB Med</strong>
 								<br />
@@ -79,5 +86,12 @@ const base = import.meta.env.BASE_URL;
 				)
 			}
 		</div>
+		<script is:inline define:vars={{ swUrl: withBase('sw.js'), swScope: base }}>
+			if ('serviceWorker' in navigator) {
+				window.addEventListener('load', () => {
+					navigator.serviceWorker.register(swUrl, { scope: swScope }).catch(() => {});
+				});
+			}
+		</script>
 	</body>
 </html>

@@ -1,0 +1,33 @@
+{
+	"name": "IPB Med · Letras",
+	"short_name": "IPB Med",
+	"description": "Letras de hinos e cânticos da Igreja Presbiteriana de Medianeira.",
+	"lang": "pt-BR",
+	"dir": "ltr",
+	"start_url": "./",
+	"scope": "./",
+	"display": "standalone",
+	"orientation": "portrait-primary",
+	"background_color": "#fafbfa",
+	"theme_color": "#0f5c52",
+	"icons": [
+		{
+			"src": "./icons/icon-192.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "./icons/icon-512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "./icons/icon-maskable-512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "maskable"
+		}
+	]
+}

@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SongHeader from '../../components/SongHeader.astro';
+import { withBase } from '../../lib/paths';
 
 export async function getStaticPaths() {
 	const songs = await getCollection('songs');
@@ -13,8 +14,6 @@ export async function getStaticPaths() {
 
 const { song } = Astro.props;
 const { Content } = await render(song);
-const base = import.meta.env.BASE_URL;
-
 const songs = (await getCollection('songs'))
 	.map((entry) => ({
 		id: entry.id,
@@ -33,7 +32,7 @@ const songs = (await getCollection('songs'))
 <BaseLayout title={song.data.title} description={`Letra: ${song.data.title} — IPB Med`}>
 	<SongHeader songs={songs} currentId={song.id} />
 
-	<a class="back-link" href={base}>‹ Todas as músicas</a>
+	<a class="back-link" href={withBase()}>‹ Todas as músicas</a>
 
 	<header class="song-hero">
 		<p class="eyebrow">

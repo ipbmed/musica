@@ -12,7 +12,8 @@
     "astro": "astro",
     "extract:hinos": "node scripts/extract-novo-cantico.mjs",
     "extract:canticos": "node scripts/extract-canticos.mjs",
-    "process:logo": "node scripts/process-logo.mjs"
+    "process:logo": "node scripts/process-logo.mjs",
+    "pwa:icons": "node scripts/generate-pwa-icons.mjs"
   },
   "dependencies": {
     "astro": "^7.1.6"
