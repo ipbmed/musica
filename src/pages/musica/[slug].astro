@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import SongHeader from '../../components/SongHeader.astro';
 
 export async function getStaticPaths() {
 	const songs = await getCollection('songs');
@@ -13,18 +14,39 @@ export async function getStaticPaths() {
 const { song } = Astro.props;
 const { Content } = await render(song);
 const base = import.meta.env.BASE_URL;
+
+const songs = (await getCollection('songs'))
+	.map((entry) => ({
+		id: entry.id,
+		title: entry.data.title,
+		kind: entry.data.kind,
+		number: entry.data.number,
+	}))
+	.sort((a, b) => {
+		const aNum = a.number ?? Number.POSITIVE_INFINITY;
+		const bNum = b.number ?? Number.POSITIVE_INFINITY;
+		if (aNum !== bNum) return aNum - bNum;
+		return a.title.localeCompare(b.title, 'pt-BR');
+	});
 ---
 
 <BaseLayout title={song.data.title} description={`Letra: ${song.data.title} — IPB Med`}>
-	<a class="back-link" href={base}>← Todas as músicas</a>
+	<SongHeader songs={songs} currentId={song.id} />
+
+	<a class="back-link" href={base}>‹ Todas as músicas</a>
 
 	<header class="song-hero">
-		{
-			song.data.number !== undefined && (
-				<p class="eyebrow">Nº {song.data.number}</p>
-			)
-		}
+		<p class="eyebrow">
+			{
+				song.data.kind === 'hino'
+					? `Hino Nº ${song.data.number}`
+					: song.data.number !== undefined
+						? `Cântico · Nº ${song.data.number}`
+						: 'Cântico'
+			}
+		</p>
 		<h1>{song.data.title}</h1>
+		{song.data.artist && <p class="song-artist">{song.data.artist}</p>}
 	</header>
 
 	{
@@ -39,7 +61,7 @@ const base = import.meta.env.BASE_URL;
 		)
 	}
 
-	<article class="lyrics">
+	<article class="lyrics" data-lyrics>
 		<Content />
 	</article>
 </BaseLayout>

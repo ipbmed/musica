@@ -1,0 +1,64 @@
+---
+---
+
+<details class="reader-toolbar" data-reader-toolbar>
+	<summary class="reader-toggle">
+		<span aria-hidden="true">Aa</span>
+		<span class="visually-hidden">Ajustes de leitura</span>
+	</summary>
+
+	<div class="reader-panel" role="toolbar" aria-label="Ajustes de leitura">
+		<div class="reader-group" role="group" aria-label="Tamanho do texto">
+			<button type="button" class="reader-btn" data-reader-size-down aria-label="Diminuir texto">
+				A−
+			</button>
+			<span class="reader-size" data-reader-size-label aria-hidden="true">3</span>
+			<button type="button" class="reader-btn" data-reader-size-up aria-label="Aumentar texto">
+				A+
+			</button>
+		</div>
+
+		<div class="reader-group" role="group" aria-label="Contraste">
+			<button type="button" class="reader-btn" data-reader-contrast="normal" aria-pressed="true">
+				Normal
+			</button>
+			<button type="button" class="reader-btn" data-reader-contrast="alto" aria-pressed="false">
+				Alto
+			</button>
+			<button type="button" class="reader-btn" data-reader-contrast="escuro" aria-pressed="false">
+				Escuro
+			</button>
+		</div>
+
+		<div class="reader-group" role="group" aria-label="Tipo de fonte">
+			<button type="button" class="reader-btn reader-btn--font" data-reader-font="serif" aria-pressed="true">
+				Serif
+			</button>
+			<button type="button" class="reader-btn reader-btn--font" data-reader-font="sans" aria-pressed="false">
+				Sans
+			</button>
+			<button type="button" class="reader-btn reader-btn--font" data-reader-font="leitura" aria-pressed="false">
+				Leitura
+			</button>
+		</div>
+	</div>
+</details>
+
+<style>
+	.visually-hidden {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+</style>
+
+<script>
+	import { initReaderPrefs } from '../scripts/readerPrefs';
+	initReaderPrefs();
+</script>

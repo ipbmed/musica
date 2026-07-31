@@ -1,0 +1,32 @@
+---
+title: "Maravilhas Divinas"
+kind: hino
+number: 33
+tags: ["novo-cantico"]
+links: []
+---
+
+Ao Deus de amor e de imensa bondade,
+Com voz de júbilo, vinde aclamai!
+Com coração transbordante de graças,
+Seu grande amor, todos, vinde louvai.
+
+No céu, na terra, que maravilhas
+Vai operando o poder do Senhor!
+Mas seu amor, aos homens perdidos,
+Das maravilhas é sempre a maior.
+
+Já nossos pais nos contaram a história
+De Deus, falando com muito prazer,
+Que nas tristezas, nos grandes perigos,
+Ele os salvou por seu grande poder.
+
+Hoje também, nós bem alto, cantamos
+Que as orações ele nos atendeu:
+Seu forte braço, que é tão compassivo
+Em nosso auxílio ele sempre estendeu.
+
+Como até hoje, e daqui para frente,
+Ele será nosso eterno poder,
+Nosso castelo bem forte e seguro,
+E nossa Fonte de excelso prazer.

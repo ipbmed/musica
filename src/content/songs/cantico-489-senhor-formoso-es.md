@@ -1,0 +1,14 @@
+---
+title: "Senhor formoso és"
+kind: cantico
+number: 489
+tags: ["ipb-medianeira"]
+links: []
+---
+
+Senhor formoso és, Tua face eu quero ver
+Pois quando estás neste lugar, Tua graça invade-me
+
+Acende a chama ó Pai, Que uma vez brilhou
+Vem limpar brilhar resplandecer
+O meu primeiro amor

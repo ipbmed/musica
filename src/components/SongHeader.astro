@@ -1,0 +1,59 @@
+---
+import ReaderToolbar from './ReaderToolbar.astro';
+import SongDrawer from './SongDrawer.astro';
+
+interface SongItem {
+	id: string;
+	title: string;
+	kind: 'hino' | 'cantico';
+	number?: number;
+}
+
+interface Props {
+	songs: SongItem[];
+	currentId: string;
+}
+
+const { songs, currentId } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<header class="app-bar">
+	<button
+		type="button"
+		class="drawer-launch"
+		data-drawer-open
+		aria-expanded="false"
+		aria-controls="song-drawer"
+	>
+		<span aria-hidden="true">☰</span>
+		<span class="visually-hidden">Abrir lista de músicas</span>
+	</button>
+
+	<a class="brand-lockup brand-lockup--compact" href={base}>
+		<img class="logo" src={`${base}logo.png`} alt="Igreja Presbiteriana do Brasil" width="36" height="29" />
+		<span class="brand-text">
+			IPB Med
+			<small>Letras</small>
+		</span>
+	</a>
+
+	<ReaderToolbar />
+</header>
+
+<!-- Fora do app-bar: backdrop-filter cria containing block e quebrava o fixed da gaveta -->
+<SongDrawer songs={songs} currentId={currentId} />
+
+<style>
+	.visually-hidden {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+</style>

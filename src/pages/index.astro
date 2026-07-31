@@ -9,58 +9,120 @@ const songs = (await getCollection('songs')).sort((a, b) => {
 	return a.data.title.localeCompare(b.data.title, 'pt-BR');
 });
 
+const alphabet = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
+
+function titleLetter(title: string) {
+	const normalized = title
+		.trim()
+		.normalize('NFD')
+		.replace(/\p{M}/gu, '')
+		.toUpperCase();
+	const letter = normalized.charAt(0);
+	return /[A-Z]/.test(letter) ? letter : '#';
+}
+
 const base = import.meta.env.BASE_URL;
 ---
 
-<BaseLayout title="IPB Med" description="Letras de músicas da Igreja Presbiteriana de Medianeira.">
+<BaseLayout title="IPB Med" description="Letras de músicas da Igreja Presbiteriana de Medianeira." home>
 	<header class="site-header">
-		<a class="brand" href={base}>
-			IPB Med
-			<span>Letras</span>
+		<a class="brand-lockup" href={base}>
+			<img class="logo" src={`${base}logo.png`} alt="Igreja Presbiteriana do Brasil" width="72" height="58" />
+			<span class="brand-text">
+				IPB Med
+				<small>Letras</small>
+			</span>
 		</a>
-		<p class="tagline">Letras para o culto da Igreja Presbiteriana de Medianeira.</p>
+		<div class="tagline-row">
+			<p class="tagline">Igreja Presbiteriana de Medianeira</p>
+			<nav class="social-links" aria-label="Redes sociais">
+				<a href="https://www.instagram.com/ipbmedianeira/" target="_blank" rel="noopener noreferrer">
+					Instagram
+				</a>
+				<a href="https://www.facebook.com/ipbmedianeira" target="_blank" rel="noopener noreferrer">
+					Facebook
+				</a>
+				<a href="https://www.youtube.com/c/IPBMedianeira" target="_blank" rel="noopener noreferrer">
+					YouTube
+				</a>
+			</nav>
+		</div>
 	</header>
+
+	<div class="toolbar">
+		<div class="kind-filters" role="group" aria-label="Filtrar por tipo">
+			<button type="button" class="filter-btn" data-kind-filter="todos" aria-pressed="true">Todos</button>
+			<button type="button" class="filter-btn" data-kind-filter="hino" aria-pressed="false">Hinos</button>
+			<button type="button" class="filter-btn" data-kind-filter="cantico" aria-pressed="false">Cânticos</button>
+		</div>
+
+		<label class="sort-field">
+			<span class="visually-hidden">Ordenar por</span>
+			<select data-sort-mode>
+				<option value="numero" selected>Ordenar: número</option>
+				<option value="titulo">Ordenar: título</option>
+			</select>
+		</label>
+
+		<div class="letter-filters" role="group" aria-label="Filtrar por letra">
+			<button type="button" class="letter-btn" data-letter-filter="todos" aria-pressed="true">
+				Todas
+			</button>
+			{
+				alphabet.map((letter) => (
+					<button type="button" class="letter-btn" data-letter-filter={letter} aria-pressed="false">
+						{letter}
+					</button>
+				))
+			}
+		</div>
+	</div>
 
 	<div class="search">
 		<label class="visually-hidden" for="song-search">Buscar música</label>
 		<input
 			id="song-search"
 			type="search"
-			placeholder="Buscar por título, número ou tag…"
+			placeholder="Buscar título, número ou tag"
 			autocomplete="off"
 			inputmode="search"
 			data-song-search
 		/>
 	</div>
 
-	<ul class="song-list" role="list">
+	<ul class="song-list" role="list" data-song-list>
 		{
 			songs.map((song) => {
-				const search = [song.data.title, song.data.number, ...(song.data.tags ?? [])]
+				const search = [
+					song.data.title,
+					song.data.number,
+					song.data.kind,
+					song.data.kind === 'hino' ? 'hino' : 'cantico',
+					song.data.kind === 'cantico' ? 'cântico' : '',
+					...(song.data.tags ?? []),
+				]
 					.filter(Boolean)
 					.join(' ')
 					.toLowerCase();
 
 				return (
-					<li data-song-item data-search={search}>
+					<li
+						data-song-item
+						data-search={search}
+						data-kind={song.data.kind}
+						data-number={song.data.number ?? ''}
+						data-title={song.data.title}
+						data-letter={titleLetter(song.data.title)}
+					>
 						<a class="song-link" href={`${base}musica/${song.id}/`}>
-							{song.data.number !== undefined ? (
-								<span class="song-number">{song.data.number}</span>
-							) : (
-								<span class="song-number" aria-hidden="true">
-									·
-								</span>
-							)}
-							<span>
-								<span class="song-title">{song.data.title}</span>
-								{song.data.tags.length > 0 && (
-									<span class="song-tags">
-										{song.data.tags.map((tag) => (
-											<span class="tag">{tag}</span>
-										))}
-									</span>
-								)}
+							<span class="song-number">
+								{song.data.number !== undefined ? song.data.number : '—'}
 							</span>
+							<span class="song-meta">
+								<span class="song-kind">{song.data.kind === 'hino' ? 'Hino' : 'Cântico'}</span>
+								<span class="song-title">{song.data.title}</span>
+							</span>
+							<span class="song-chevron" aria-hidden="true">›</span>
 						</a>
 					</li>
 				);
