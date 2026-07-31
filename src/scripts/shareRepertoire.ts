@@ -90,8 +90,16 @@ function askImportMode(count: number, purpose: string): Promise<'add' | 'replace
 		return Promise.resolve(replace ? 'replace' : 'add');
 	}
 
-	const countEl = dialog.querySelector('[data-rep-import-count]');
-	if (countEl) countEl.textContent = String(count);
+	const messageEl = dialog.querySelector<HTMLElement>('[data-rep-import-message]');
+	if (messageEl) {
+		const countStrong = document.createElement('strong');
+		countStrong.textContent = String(count);
+		messageEl.replaceChildren(
+			document.createTextNode('Já existem músicas no repertório. O link traz '),
+			countStrong,
+			document.createTextNode(' música(s). O que deseja fazer?'),
+		);
+	}
 
 	const purposeEl = dialog.querySelector<HTMLElement>('[data-rep-import-purpose]');
 	const purposeWrap = dialog.querySelector<HTMLElement>('[data-rep-import-purpose-wrap]');
