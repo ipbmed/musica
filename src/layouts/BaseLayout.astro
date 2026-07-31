@@ -13,11 +13,11 @@ interface Props {
 
 const {
 	title,
-	description = 'Letras de músicas da Igreja Presbiteriana de Medianeira.',
+	description = 'Músicas da Igreja Presbiteriana de Medianeira.',
 	home = false,
 	hasMusicianVersions = false,
 } = Astro.props;
-const pageTitle = title === 'IPB Med' ? 'IPB Med · Letras' : `${title} · IPB Med`;
+const pageTitle = title === 'IPB Med' ? 'IPB Med · Música' : `${title} · IPB Med`;
 const base = withBase();
 ---
 
@@ -39,7 +39,7 @@ const base = withBase();
 		<meta name="mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="default" />
-		<meta name="apple-mobile-web-app-title" content="IPB Med" />
+		<meta name="apple-mobile-web-app-title" content="IPB Med Música" />
 		<meta name="description" content={description} />
 		<meta name="generator" content={Astro.generator} />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />

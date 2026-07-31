@@ -1,6 +1,6 @@
-# IPB Med — Letras
+# IPB Med — Música
 
-Aplicação web **mobile-first** com letras de músicas da Igreja Presbiteriana de Medianeira (IPB Med).
+Aplicação web **mobile-first** com músicas da Igreja Presbiteriana de Medianeira (IPB Med).
 
 - Conteúdo em **Markdown** (um arquivo por música)
 - Site estático com [Astro](https://astro.build)

@@ -1,7 +1,7 @@
 {
-	"name": "IPB Med · Letras",
+	"name": "IPB Med · Música",
 	"short_name": "IPB Med",
-	"description": "Letras de hinos e cânticos da Igreja Presbiteriana de Medianeira.",
+	"description": "Hinos e cânticos da Igreja Presbiteriana de Medianeira.",
 	"lang": "pt-BR",
 	"dir": "ltr",
 	"start_url": "./",
