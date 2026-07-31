@@ -39,6 +39,17 @@ const homeHref = withBase();
 		</span>
 	</a>
 
+	<button
+		type="button"
+		class="musician-toggle"
+		data-musician-toggle
+		aria-pressed="false"
+		title="Modo músico"
+	>
+		<span aria-hidden="true">♪</span>
+		<span class="visually-hidden">Alternar modo músico</span>
+	</button>
+
 	<ReaderToolbar />
 </header>
 
@@ -58,3 +69,8 @@ const homeHref = withBase();
 		border: 0;
 	}
 </style>
+
+<script>
+	import { initMusicianMode } from '../scripts/musicianMode';
+	initMusicianMode();
+</script>

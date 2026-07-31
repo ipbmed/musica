@@ -2,6 +2,8 @@
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SongHeader from '../../components/SongHeader.astro';
+import MusicianPanel from '../../components/MusicianPanel.astro';
+import RepertoireBar from '../../components/RepertoireBar.astro';
 import { withBase } from '../../lib/paths';
 
 export async function getStaticPaths() {
@@ -29,38 +31,67 @@ const songs = (await getCollection('songs'))
 	});
 ---
 
-<BaseLayout title={song.data.title} description={`Letra: ${song.data.title} — IPB Med`}>
+<BaseLayout
+	title={song.data.title}
+	description={`Letra: ${song.data.title} — IPB Med`}
+	hasMusicianVersions={song.data.versions.length > 0}
+>
 	<SongHeader songs={songs} currentId={song.id} />
 
 	<a class="back-link" href={withBase()}>‹ Todas as músicas</a>
 
 	<header class="song-hero">
-		<p class="eyebrow">
-			{
-				song.data.kind === 'hino'
-					? `Hino Nº ${song.data.number}`
-					: song.data.number !== undefined
-						? `Cântico · Nº ${song.data.number}`
-						: 'Cântico'
-			}
-		</p>
+		<div class="song-hero-meta">
+			<p class="eyebrow song-kind-row">
+				<span>{song.data.kind === 'hino' ? 'Hino' : 'Cântico'}</span>
+				{
+					song.data.number !== undefined && (
+						<span class="song-num-badge">{song.data.number}</span>
+					)
+				}
+			</p>
+			<button
+				type="button"
+				class="fav-btn fav-btn--hero"
+				data-fav-toggle
+				data-song-id={song.id}
+				aria-pressed="false"
+				title="Adicionar ao repertório"
+			>
+				<span aria-hidden="true">☆</span>
+				<span data-fav-label>Repertório</span>
+			</button>
+		</div>
 		<h1>{song.data.title}</h1>
 		{song.data.artist && <p class="song-artist">{song.data.artist}</p>}
 	</header>
 
-	{
-		song.data.links.length > 0 && (
-			<nav class="links" aria-label="Links da música">
-				{song.data.links.map((link) => (
-					<a href={link.url} target="_blank" rel="noopener noreferrer">
-						{link.label}
-					</a>
-				))}
-			</nav>
-		)
-	}
+	<div class="congregation-view" data-congregation-view>
+		{
+			song.data.links.length > 0 && (
+				<nav class="links" aria-label="Links da música">
+					{song.data.links.map((link) => (
+						<a href={link.url} target="_blank" rel="noopener noreferrer">
+							{link.label}
+						</a>
+					))}
+				</nav>
+			)
+		}
 
-	<article class="lyrics" data-lyrics>
-		<Content />
-	</article>
+		<article class="lyrics" data-lyrics>
+			<Content />
+		</article>
+	</div>
+
+	<div class="musician-view" data-musician-view>
+		<MusicianPanel versions={song.data.versions} />
+	</div>
+
+	<RepertoireBar songs={songs} currentId={song.id} />
 </BaseLayout>
+
+<script>
+	import { initFavoriteToggles } from '../../scripts/favorites';
+	initFavoriteToggles();
+</script>

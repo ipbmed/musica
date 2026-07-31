@@ -54,13 +54,10 @@ function titleLetter(title: string) {
 					<button type="button" class="filter-btn" data-drawer-kind="cantico" aria-pressed="false">Cânticos</button>
 				</div>
 
-				<label class="sort-field">
-					<span class="visually-hidden">Ordenar por</span>
-					<select data-drawer-sort>
-						<option value="numero" selected>Ordenar: número</option>
-						<option value="titulo">Ordenar: título</option>
-					</select>
-				</label>
+				<div class="sort-filters" role="group" aria-label="Ordenar por">
+					<button type="button" class="filter-btn" data-drawer-sort="numero" aria-pressed="true">Número</button>
+					<button type="button" class="filter-btn" data-drawer-sort="titulo" aria-pressed="false">Título</button>
+				</div>
 
 				<div class="letter-filters" role="group" aria-label="Filtrar por letra">
 					<button type="button" class="letter-btn" data-drawer-letter="todos" aria-pressed="true">
@@ -112,11 +109,13 @@ function titleLetter(title: string) {
 								href={withBase(`musica/${song.id}/`)}
 								aria-current={current ? 'page' : undefined}
 							>
-								<span class="drawer-number">
-									{song.number !== undefined ? song.number : '—'}
-								</span>
 								<span class="drawer-meta">
-									<span class="drawer-kind">{song.kind === 'hino' ? 'Hino' : 'Cântico'}</span>
+									<span class="song-kind-row">
+										<span class="drawer-kind">{song.kind === 'hino' ? 'Hino' : 'Cântico'}</span>
+										{song.number !== undefined && (
+											<span class="song-num-badge">{song.number}</span>
+										)}
+									</span>
 									<span class="drawer-title">{song.title}</span>
 								</span>
 							</a>

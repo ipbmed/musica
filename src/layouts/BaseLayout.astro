@@ -1,24 +1,32 @@
 ---
 import '../styles/global.css';
+import ReaderToolbar from '../components/ReaderToolbar.astro';
 import { withBase } from '../lib/paths';
 
 interface Props {
 	title: string;
 	description?: string;
 	home?: boolean;
+	/** Se a música tem versões do modo músico. */
+	hasMusicianVersions?: boolean;
 }
 
 const {
 	title,
 	description = 'Letras de músicas da Igreja Presbiteriana de Medianeira.',
 	home = false,
+	hasMusicianVersions = false,
 } = Astro.props;
 const pageTitle = title === 'IPB Med' ? 'IPB Med · Letras' : `${title} · IPB Med`;
 const base = withBase();
 ---
 
 <!doctype html>
-<html lang="pt-BR">
+<html
+	lang="pt-BR"
+	data-list-view="todas"
+	data-has-musician-versions={hasMusicianVersions ? 'true' : 'false'}
+>
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/png" sizes="32x32" href={withBase('favicon.png')} />
@@ -44,14 +52,19 @@ const base = withBase();
 		<script is:inline>
 			(() => {
 				try {
-					const raw = localStorage.getItem('ipbmed-reader-prefs');
-					if (!raw) return;
-					const prefs = JSON.parse(raw);
 					const root = document.documentElement;
-					if (prefs.size) root.dataset.textSize = String(prefs.size);
-					if (prefs.contrast) root.dataset.contrast = prefs.contrast;
-					if (prefs.font) root.dataset.font = prefs.font;
-				} catch {}
+					const raw = localStorage.getItem('ipbmed-reader-prefs');
+					if (raw) {
+						const prefs = JSON.parse(raw);
+						if (prefs.size) root.dataset.textSize = String(prefs.size);
+						if (prefs.contrast) root.dataset.contrast = prefs.contrast;
+						if (prefs.font) root.dataset.font = prefs.font;
+					}
+					root.dataset.musician = localStorage.getItem('ipbmed-musician-mode') === '1' ? 'on' : 'off';
+					if (!root.dataset.listView) root.dataset.listView = 'todas';
+				} catch {
+					document.documentElement.dataset.listView = 'todas';
+				}
 			})();
 		</script>
 	</head>
@@ -59,13 +72,18 @@ const base = withBase();
 		{
 			home && (
 				<section class="church-hero" aria-label="Fachada da igreja">
-					<img
-						src={withBase('images/igreja.jpg')}
-						alt="Fachada da Igreja Presbiteriana de Medianeira"
-						width="1600"
-						height="900"
-						fetchpriority="high"
-					/>
+					<div class="church-hero-media">
+						<img
+							src={withBase('images/igreja.jpg')}
+							alt="Fachada da Igreja Presbiteriana de Medianeira"
+							width="1600"
+							height="900"
+							fetchpriority="high"
+						/>
+					</div>
+					<div class="church-hero-tools">
+						<ReaderToolbar />
+					</div>
 				</section>
 			)
 		}

@@ -20,7 +20,7 @@ export function initSongDrawer() {
 	const empty = document.querySelector<HTMLElement>('[data-drawer-empty]');
 	const kindButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-drawer-kind]'));
 	const letterButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-drawer-letter]'));
-	const sortSelect = document.querySelector<HTMLSelectElement>('[data-drawer-sort]');
+	const sortButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-drawer-sort]'));
 	const current = document
 		.querySelector<HTMLElement>('[data-drawer-item] a[aria-current="page"]')
 		?.closest<HTMLElement>('[data-drawer-item]');
@@ -29,7 +29,9 @@ export function initSongDrawer() {
 
 	let kind: KindFilter = 'todos';
 	let letter: LetterFilter = 'todos';
-	let sort: SortMode = (sortSelect?.value as SortMode) || 'numero';
+	let sort: SortMode =
+		(sortButtons.find((button) => button.getAttribute('aria-pressed') === 'true')?.dataset.drawerSort as SortMode) ||
+		'numero';
 
 	const syncLetterAvailability = () => {
 		for (const button of letterButtons) {
@@ -146,10 +148,15 @@ export function initSongDrawer() {
 		});
 	}
 
-	sortSelect?.addEventListener('change', () => {
-		sort = (sortSelect.value as SortMode) || 'numero';
-		apply();
-	});
+	for (const button of sortButtons) {
+		button.addEventListener('click', () => {
+			sort = (button.dataset.drawerSort as SortMode) || 'numero';
+			for (const other of sortButtons) {
+				other.setAttribute('aria-pressed', String(other === button));
+			}
+			apply();
+		});
+	}
 
 	syncLetterAvailability();
 	apply();

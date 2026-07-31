@@ -1,0 +1,180 @@
+---
+import { parseChordLyrics } from '../lib/chords';
+
+interface VersionLink {
+	label: string;
+	url: string;
+}
+
+interface Version {
+	id: string;
+	label: string;
+	key?: string;
+	bpm?: number;
+	instructions: string[];
+	links: VersionLink[];
+	lyrics: string;
+}
+
+interface Props {
+	versions: Version[];
+}
+
+const { versions } = Astro.props;
+const parsed = versions.map((version) => ({
+	...version,
+	blocks: parseChordLyrics(version.lyrics),
+}));
+const initialBpm = parsed.find((version) => version.bpm)?.bpm ?? 80;
+const anyBpm = parsed.some((version) => version.bpm);
+---
+
+<section class="musician-panel" data-musician-panel>
+	{
+		versions.length > 0 && (
+			<>
+				<div class="version-tabs" role="group" aria-label="Versões da música">
+					{parsed.map((version, index) => (
+						<button
+							type="button"
+							class="filter-btn"
+							data-version-id={version.id}
+							aria-pressed={index === 0 ? 'true' : 'false'}
+						>
+							{version.label}
+						</button>
+					))}
+				</div>
+
+				{
+					anyBpm && (
+						<div class="metronome" data-metronome>
+							<div class="metronome-pulse" data-metro-pulse aria-hidden="true" />
+							<button
+								type="button"
+								class="metronome-play"
+								data-metro-play
+								aria-pressed="false"
+								aria-label="Iniciar metrônomo"
+							>
+								▶
+							</button>
+							<label class="metronome-bpm">
+								<span class="visually-hidden">BPM</span>
+								<input type="range" min="40" max="220" step="1" value={initialBpm} data-metro-bpm />
+								<span>
+									<strong data-metro-bpm-label>{initialBpm}</strong> BPM
+								</span>
+							</label>
+						</div>
+					)
+				}
+
+				{parsed.map((version, index) => (
+					<div
+						class="version-panel"
+						data-version-panel={version.id}
+						data-bpm={version.bpm ?? ''}
+						hidden={index !== 0}
+					>
+						<div class="version-meta">
+							{version.key && (
+								<p class="version-chip">
+									<span>Tom</span>
+									<strong>{version.key}</strong>
+								</p>
+							)}
+							{version.bpm && (
+								<p class="version-chip">
+									<span>BPM</span>
+									<strong>{version.bpm}</strong>
+								</p>
+							)}
+						</div>
+
+						{
+							version.instructions.length > 0 && (
+								<section class="version-instructions" data-roteiro data-roteiro-mode="condensado">
+									<div class="version-instructions-top">
+										<span class="version-instructions-label">Roteiro</span>
+										<div class="roteiro-modes" role="group" aria-label="Modo do roteiro">
+											<button type="button" class="roteiro-mode-btn" data-roteiro-mode-btn="fechado" aria-pressed="false">
+												Fechado
+											</button>
+											<button type="button" class="roteiro-mode-btn" data-roteiro-mode-btn="condensado" aria-pressed="true">
+												Condensado
+											</button>
+											<button type="button" class="roteiro-mode-btn" data-roteiro-mode-btn="expandido" aria-pressed="false">
+												Expandido
+											</button>
+										</div>
+									</div>
+									<div class="version-instructions-condensed" data-roteiro-condensed>
+										{version.instructions.map((step) => (
+											<span class="roteiro-chip">{step}</span>
+										))}
+									</div>
+									<ol class="version-instructions-full" data-roteiro-full hidden>
+										{version.instructions.map((step) => (
+											<li>{step}</li>
+										))}
+									</ol>
+								</section>
+							)
+						}
+
+						{
+							version.links.length > 0 && (
+								<nav class="links version-links" aria-label={`Links da versão ${version.label}`}>
+									{version.links.map((link) => (
+										<a href={link.url} target="_blank" rel="noopener noreferrer">
+											{link.label}
+										</a>
+									))}
+								</nav>
+							)
+						}
+
+						<article class="chord-lyrics" aria-label={`Cifra — ${version.label}`}>
+							{version.blocks.map((block) =>
+								block.type === 'break' ? (
+									<div class="chord-break" />
+								) : block.type === 'instruction' ? (
+									<p class="chord-instruction">{block.text}</p>
+								) : (
+									<p class="chord-line">
+										{block.segments?.map((segment) => (
+											<span class="chord-seg">
+												{segment.chord && <span class="chord-mark">{segment.chord}</span>}
+												<span class="chord-text">{segment.text || '\u00a0'}</span>
+											</span>
+										))}
+									</p>
+								),
+							)}
+						</article>
+					</div>
+				))}
+			</>
+		)
+	}
+</section>
+
+<style>
+	.visually-hidden {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+</style>
+
+<script>
+	import { initMusicianPanel } from '../scripts/musicianPanel';
+	initMusicianPanel();
+</script>

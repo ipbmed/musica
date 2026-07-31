@@ -1,0 +1,70 @@
+---
+interface SongItem {
+	id: string;
+	title: string;
+	kind: 'hino' | 'cantico';
+	number?: number;
+}
+
+interface Props {
+	songs: SongItem[];
+	currentId: string;
+}
+
+const { songs, currentId } = Astro.props;
+const catalogJson = JSON.stringify(
+	songs.map((song) => ({
+		id: song.id,
+		title: song.title,
+		kind: song.kind,
+		number: song.number,
+	})),
+).replace(/</g, '\\u003c');
+---
+
+<script type="application/json" data-repertoire-catalog set:html={catalogJson} />
+
+<nav class="repertoire-bar" data-repertoire-bar data-current-id={currentId} hidden aria-label="Navegação do repertório">
+	<button type="button" class="rep-nav-btn" data-rep-prev aria-label="Música anterior do repertório" disabled>
+		‹
+	</button>
+
+	<button
+		type="button"
+		class="rep-picker"
+		data-rep-picker
+		aria-expanded="false"
+		aria-controls="rep-sheet"
+		title="Escolher música do repertório"
+	>
+		<span class="rep-picker-pos" data-rep-pos>—/—</span>
+		<span class="rep-picker-title" data-rep-title>Repertório</span>
+	</button>
+
+	<button type="button" class="rep-nav-btn" data-rep-next aria-label="Próxima música do repertório" disabled>
+		›
+	</button>
+</nav>
+
+<div class="rep-sheet" id="rep-sheet" data-rep-sheet data-open="false">
+	<button type="button" class="rep-sheet-backdrop" data-rep-sheet-close tabindex="-1" aria-label="Fechar lista"></button>
+	<div class="rep-sheet-panel" role="dialog" aria-modal="true" aria-label="Músicas do repertório">
+		<header class="rep-sheet-header">
+			<h2>Repertório</h2>
+			<div class="rep-sheet-actions">
+				<a class="rep-sheet-btn rep-manage" data-rep-manage href="../" title="Gerenciar repertório" aria-label="Gerenciar repertório">
+					<span aria-hidden="true">☰</span>
+				</a>
+				<button type="button" class="rep-sheet-btn rep-sheet-close" data-rep-sheet-close aria-label="Fechar">
+					<span aria-hidden="true">✕</span>
+				</button>
+			</div>
+		</header>
+		<ul class="rep-sheet-list" data-rep-sheet-list></ul>
+	</div>
+</div>
+
+<script>
+	import { initRepertoireBar } from '../scripts/repertoireBar';
+	initRepertoireBar();
+</script>

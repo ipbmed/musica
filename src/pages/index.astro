@@ -27,13 +27,28 @@ const homeHref = withBase();
 
 <BaseLayout title="IPB Med" description="Letras de músicas da Igreja Presbiteriana de Medianeira." home>
 	<header class="site-header">
-		<a class="brand-lockup" href={homeHref}>
-			<img class="logo" src={withBase('logo.png')} alt="Igreja Presbiteriana do Brasil" width="72" height="58" />
-			<span class="brand-text">
-				IPB Med
-				<small>Letras</small>
-			</span>
-		</a>
+		<div class="site-header-top">
+			<a class="brand-lockup" href={homeHref}>
+				<img class="logo" src={withBase('logo.png')} alt="Igreja Presbiteriana do Brasil" width="72" height="58" />
+				<span class="brand-text">
+					IPB Med
+					<small>Letras</small>
+				</span>
+			</a>
+			<div class="site-header-actions">
+				<button
+					type="button"
+					class="fav-filter-btn"
+					data-fav-filter
+					aria-pressed="false"
+					title="Mostrar somente o repertório"
+				>
+					<span aria-hidden="true">☆</span>
+					<span class="fav-filter-text">Repertório</span>
+					<span class="fav-count" data-fav-count>0</span>
+				</button>
+			</div>
+		</div>
 		<div class="tagline-row">
 			<p class="tagline">Igreja Presbiteriana de Medianeira</p>
 			<nav class="social-links" aria-label="Redes sociais">
@@ -51,31 +66,35 @@ const homeHref = withBase();
 	</header>
 
 	<div class="toolbar">
-		<div class="kind-filters" role="group" aria-label="Filtrar por tipo">
-			<button type="button" class="filter-btn" data-kind-filter="todos" aria-pressed="true">Todos</button>
-			<button type="button" class="filter-btn" data-kind-filter="hino" aria-pressed="false">Hinos</button>
-			<button type="button" class="filter-btn" data-kind-filter="cantico" aria-pressed="false">Cânticos</button>
+		<div data-catalog-filters class="catalog-filters">
+			<div class="kind-filters" role="group" aria-label="Filtrar por tipo">
+				<button type="button" class="filter-btn" data-kind-filter="todos" aria-pressed="true">Todos</button>
+				<button type="button" class="filter-btn" data-kind-filter="hino" aria-pressed="false">Hinos</button>
+				<button type="button" class="filter-btn" data-kind-filter="cantico" aria-pressed="false">Cânticos</button>
+			</div>
+
+			<div class="sort-filters" role="group" aria-label="Ordenar por">
+				<button type="button" class="filter-btn" data-sort-mode="numero" aria-pressed="true">Número</button>
+				<button type="button" class="filter-btn" data-sort-mode="titulo" aria-pressed="false">Título</button>
+			</div>
+
+			<div class="letter-filters" role="group" aria-label="Filtrar por letra">
+				<button type="button" class="letter-btn" data-letter-filter="todos" aria-pressed="true">
+					Todas
+				</button>
+				{
+					alphabet.map((letter) => (
+						<button type="button" class="letter-btn" data-letter-filter={letter} aria-pressed="false">
+							{letter}
+						</button>
+					))
+				}
+			</div>
 		</div>
 
-		<label class="sort-field">
-			<span class="visually-hidden">Ordenar por</span>
-			<select data-sort-mode>
-				<option value="numero" selected>Ordenar: número</option>
-				<option value="titulo">Ordenar: título</option>
-			</select>
-		</label>
-
-		<div class="letter-filters" role="group" aria-label="Filtrar por letra">
-			<button type="button" class="letter-btn" data-letter-filter="todos" aria-pressed="true">
-				Todas
-			</button>
-			{
-				alphabet.map((letter) => (
-					<button type="button" class="letter-btn" data-letter-filter={letter} aria-pressed="false">
-						{letter}
-					</button>
-				))
-			}
+		<div class="fav-actions" data-fav-actions hidden>
+			<p class="fav-hint">Repertório neste aparelho. Use as setas para ordenar.</p>
+			<button type="button" class="filter-btn fav-clear" data-fav-clear disabled>Limpar repertório</button>
 		</div>
 	</div>
 
@@ -108,23 +127,51 @@ const homeHref = withBase();
 
 				return (
 					<li
+						class="song-row"
 						data-song-item
+						data-song-id={song.id}
 						data-search={search}
 						data-kind={song.data.kind}
 						data-number={song.data.number ?? ''}
 						data-title={song.data.title}
 						data-letter={titleLetter(song.data.title)}
 					>
+						<button
+							type="button"
+							class="fav-btn"
+							data-fav-toggle
+							data-song-id={song.id}
+							aria-pressed="false"
+							title="Adicionar ao repertório"
+						>
+							<span aria-hidden="true">☆</span>
+							<span class="visually-hidden">Adicionar ou remover do repertório</span>
+						</button>
+
 						<a class="song-link" href={withBase(`musica/${song.id}/`)}>
-							<span class="song-number">
-								{song.data.number !== undefined ? song.data.number : '—'}
-							</span>
 							<span class="song-meta">
-								<span class="song-kind">{song.data.kind === 'hino' ? 'Hino' : 'Cântico'}</span>
+								<span class="song-kind-row">
+									<span class="song-kind">{song.data.kind === 'hino' ? 'Hino' : 'Cântico'}</span>
+									{song.data.number !== undefined && (
+										<span class="song-num-badge">{song.data.number}</span>
+									)}
+								</span>
 								<span class="song-title">{song.data.title}</span>
 							</span>
 							<span class="song-chevron" aria-hidden="true">›</span>
 						</a>
+
+						<div class="fav-order" data-fav-order>
+							<button type="button" class="fav-order-btn" data-fav-up aria-label="Subir no repertório">
+								↑
+							</button>
+							<button type="button" class="fav-order-btn" data-fav-down aria-label="Descer no repertório">
+								↓
+							</button>
+							<button type="button" class="fav-order-btn fav-order-btn--remove" data-fav-remove aria-label="Remover do repertório">
+								✕
+							</button>
+						</div>
 					</li>
 				);
 			})

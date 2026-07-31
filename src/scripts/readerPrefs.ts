@@ -1,4 +1,4 @@
-export type TextSize = 1 | 2 | 3 | 4 | 5;
+export type TextSize = 1 | 2 | 3 | 4 | 5 | 6;
 export type ContrastMode = 'normal' | 'alto' | 'escuro';
 export type FontMode = 'serif' | 'sans' | 'leitura';
 
@@ -11,16 +11,18 @@ export interface ReaderPrefs {
 }
 
 const DEFAULTS: ReaderPrefs = {
-	size: 3,
+	size: 4,
 	contrast: 'normal',
 	font: 'serif',
 };
 
 const CONTRAST_ORDER: ContrastMode[] = ['normal', 'alto', 'escuro'];
 const FONT_ORDER: FontMode[] = ['serif', 'sans', 'leitura'];
+const MIN_SIZE = 1;
+const MAX_SIZE = 6;
 
 function clampSize(value: number): TextSize {
-	return Math.min(5, Math.max(1, Math.round(value))) as TextSize;
+	return Math.min(MAX_SIZE, Math.max(MIN_SIZE, Math.round(value))) as TextSize;
 }
 
 export function loadPrefs(): ReaderPrefs {
