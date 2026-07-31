@@ -5,5 +5,5 @@ import { defineConfig } from 'astro/config';
 // Ex.: https://seu-usuario.github.io
 export default defineConfig({
 	site: 'https://ipbmed.github.io',
-	base: '/musica',
+	base: '/musica/',
 });

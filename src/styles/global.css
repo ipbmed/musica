@@ -214,7 +214,6 @@ html[data-contrast='escuro'] .app-bar {
 .app-bar .brand-lockup--compact .logo {
 	width: auto;
 	height: 2.25rem;
-	aspect-ratio: 320 / 261;
 }
 
 .app-bar .brand-lockup--compact .brand-text {
@@ -235,9 +234,8 @@ html[data-contrast='escuro'] .app-bar {
 }
 
 .logo {
-	width: 4.25rem;
+	width: 3.5rem;
 	height: auto;
-	aspect-ratio: 320 / 261;
 	flex-shrink: 0;
 	object-fit: contain;
 }
