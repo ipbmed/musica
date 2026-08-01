@@ -4,6 +4,52 @@ kind: hino
 number: 286
 tags: ["novo-cantico"]
 links: []
+versions:
+  - id: original
+    label: "Original"
+    instructions:
+      - "Verso 1"
+      - "Verso 2"
+      - "Verso 3"
+      - "Verso 4"
+    links: []
+    lyrics: |
+      > Verso 1
+      Ceifeiros somos nós, fiéis,
+      Ceifando para o Rei dos reis
+      Os frutos prontos a colher
+      Que em derredor se estão a ver.
+      Assim, a Cristo, o Salvador,
+      Rendemos preito de louvor,
+      Ao nosso Mestre, lá no Céu,
+      Que sobre a cruz por nós morreu.
+
+      > Verso 2
+      Vamos nós obedecer! Vamos à colheita!
+      Para quando anoitecer ver a obra feita
+      Pouco tempo restará;
+      Breve o prazo acabará;
+      Breve, breve, breve acabará!
+
+      > Verso 3
+      Nós trabalhamos por Jesus
+      Que para os campos nos conduz,
+      E na Seara imensa quer
+      Obreiros novos receber.
+      Ainda há muito o que fazer,
+      E tanto fruto que colher!
+      Não ouves Cristo perguntar:
+      “Quem quer por mim ir trabalhar?”
+
+      > Verso 4
+      Estão as horas a fugir;
+      O teu Senhor não tarda em vir.
+      Tu queres fruto ao céu levar,
+      Ou folhas só apresentar?
+      Oh, não demores a atender!
+      A noite em breve vai descer.
+      Conosco toma o teu lugar
+      E por Jesus vem trabalhar!
 ---
 
 Ceifeiros somos nós, fiéis,

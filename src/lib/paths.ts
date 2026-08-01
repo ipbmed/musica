@@ -7,3 +7,9 @@ export function baseUrl(): string {
 export function withBase(path = ''): string {
 	return `${baseUrl()}${path.replace(/^\//, '')}`;
 }
+
+/** Resolve link absoluto ou caminho relativo ao `base` do site. */
+export function resolveHref(url: string): string {
+	if (/^[a-z][a-z0-9+.-]*:/i.test(url)) return url;
+	return withBase(url.replace(/^\//, ''));
+}

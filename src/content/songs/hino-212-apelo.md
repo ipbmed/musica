@@ -4,6 +4,39 @@ kind: hino
 number: 212
 tags: ["novo-cantico"]
 links: []
+versions:
+  - id: original
+    label: "Original"
+    instructions:
+      - "Verso 1"
+      - "Verso 2"
+      - "Verso 3"
+      - "Verso 4"
+    links: []
+    lyrics: |
+      > Verso 1
+      Alma, escuta o bom Senhor
+      A Jesus, o Salvador.
+      Ele diz com terno amor:
+      “Tu me amas, pecador?”
+
+      > Verso 2
+      Das prisões te soltarei,
+      As feridas curarei!
+      Vim do céu por teu amor;
+      “Tu me amas, pecador?
+
+      > Verso 3
+      “Minha glória tu verás,
+      Minha graça gozarás!
+      Vida eterna te darei,
+      Não te desampararei!”
+
+      > Verso 4
+      Ajudar-me vem, Senhor!
+      A entregar-te o meu amor!
+      Faze, ó bom Jesus, que assim
+      Sejas Tu que viva em mim. Amém
 ---
 
 Alma, escuta o bom Senhor

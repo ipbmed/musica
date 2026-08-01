@@ -4,6 +4,60 @@ kind: hino
 number: 227
 tags: ["novo-cantico"]
 links: []
+versions:
+  - id: original
+    label: "Original"
+    instructions:
+      - "Verso 1"
+      - "Verso 2"
+      - "Verso 3"
+      - "Verso 4"
+      - "Verso 5"
+      - "Verso 6"
+      - "Verso 7"
+    links: []
+    lyrics: |
+      > Verso 1
+      Conta-me a velha história
+      Do grande Salvador,
+      De Cristo e sua vida,
+      De Cristo e seu amor.
+
+      > Verso 2
+      Com pausa e paciência,
+      Pois quero penetrar
+      A altura do mistério,
+      Que Deus me pode amar.
+
+      > Verso 3
+      Conta-me a velha história,
+      Que fala ao coração,
+      De Cristo e sua glória,
+      De Cristo e seu perdão!
+
+      > Verso 4
+      Fala-me com ternura
+      Do amado Redentor,
+      A mim que tanto sofro
+      Por ser um pecador.
+
+      > Verso 5
+      Oh, que consolo traz-me
+      Em tempos de aflição,
+      Ouvir a velha história
+      Que alegra o coração!
+
+      > Verso 6
+      Se o brilho deste mundo
+      Toldar dos céus a luz
+      Oh, narra com ternura
+      A história de Jesus!
+
+      > Verso 7
+      E quando, enfim, a aurora
+      Do mundo além raiar,
+      Recorda a velha história,
+      Que Deus me quis salvar!
 ---
 
 Conta-me a velha história

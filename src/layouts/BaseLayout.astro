@@ -104,12 +104,11 @@ const base = withBase();
 				)
 			}
 		</div>
-		<script is:inline define:vars={{ swUrl: withBase('sw.js'), swScope: base }}>
-			if ('serviceWorker' in navigator) {
-				window.addEventListener('load', () => {
-					navigator.serviceWorker.register(swUrl, { scope: swScope }).catch(() => {});
-				});
-			}
+		<script define:vars={{ swUrl: withBase('sw.js'), swScope: base }}>
+			import { initServiceWorkerUpdate } from '../scripts/swUpdate';
+			window.addEventListener('load', () => {
+				initServiceWorkerUpdate(swUrl, swScope);
+			});
 		</script>
 	</body>
 </html>

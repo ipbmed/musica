@@ -31,7 +31,7 @@ export function initSongDrawer() {
 	let letter: LetterFilter = 'todos';
 	let sort: SortMode =
 		(sortButtons.find((button) => button.getAttribute('aria-pressed') === 'true')?.dataset.drawerSort as SortMode) ||
-		'numero';
+		'titulo';
 
 	const syncLetterAvailability = () => {
 		for (const button of letterButtons) {
@@ -150,7 +150,7 @@ export function initSongDrawer() {
 
 	for (const button of sortButtons) {
 		button.addEventListener('click', () => {
-			sort = (button.dataset.drawerSort as SortMode) || 'numero';
+			sort = (button.dataset.drawerSort as SortMode) || 'titulo';
 			for (const other of sortButtons) {
 				other.setAttribute('aria-pressed', String(other === button));
 			}

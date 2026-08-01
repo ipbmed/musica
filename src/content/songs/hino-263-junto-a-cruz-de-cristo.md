@@ -4,6 +4,53 @@ kind: hino
 number: 263
 tags: ["novo-cantico"]
 links: []
+versions:
+  - id: original
+    label: "Original"
+    instructions:
+      - "Verso 1"
+      - "Verso 2"
+      - "Verso 3"
+      - "Verso 4"
+      - "Verso 5"
+      - "Verso 6"
+    links: []
+    lyrics: |
+      > Verso 1
+      Na cruz de Jesus Cristo,
+      Meus olhos podem ver
+      Um vulto agonizante,
+      Por mim, ali morrer!
+
+      > Verso 2
+      Então, estremecido,
+      Contemplo o grande amor!
+      Amor incomparável,
+      Por mim, vil pecador!
+
+      > Verso 3
+      Bem junto à cruz de Cristo
+      Eu quero me abrigar;
+      À sombra do madeiro
+      Alento possa achar.
+
+      > Verso 4
+      Aragem no deserto,
+      Na estrada um doce lar,
+      Jesus sempre ameniza
+      Meu árduo caminhar.
+
+      > Verso 5
+      Viver eu quero sempre
+      À sombra dessa cruz!
+      Nenhum fulgor anseio
+      Senão o de Jesus!
+
+      > Verso 6
+      O mundo abandonando,
+      Eu tudo quis perder,
+      Porquanto achei a Cristo
+      Que transformou meu ser.!
 ---
 
 Na cruz de Jesus Cristo,

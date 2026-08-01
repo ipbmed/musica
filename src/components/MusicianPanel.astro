@@ -1,5 +1,6 @@
 ---
 import { parseChordLyrics } from '../lib/chords';
+import { resolveHref } from '../lib/paths';
 
 interface VersionLink {
 	label: string;
@@ -127,7 +128,7 @@ const anyBpm = parsed.some((version) => version.bpm);
 							version.links.length > 0 && (
 								<nav class="links version-links" aria-label={`Links da versão ${version.label}`}>
 									{version.links.map((link) => (
-										<a href={link.url} target="_blank" rel="noopener noreferrer">
+										<a href={resolveHref(link.url)} target="_blank" rel="noopener noreferrer">
 											{link.label}
 										</a>
 									))}

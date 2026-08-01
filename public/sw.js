@@ -3,12 +3,7 @@ const CACHE = 'ipbmed-musica-v1';
 const PRECACHE = ['./manifest.webmanifest', './logo.png', './icons/icon-192.png', './icons/icon-512.png'];
 
 self.addEventListener('install', (event) => {
-	event.waitUntil(
-		caches
-			.open(CACHE)
-			.then((cache) => cache.addAll(PRECACHE))
-			.then(() => self.skipWaiting()),
-	);
+	event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(PRECACHE)));
 });
 
 self.addEventListener('activate', (event) => {
@@ -20,6 +15,12 @@ self.addEventListener('activate', (event) => {
 	);
 });
 
+self.addEventListener('message', (event) => {
+	if (event.data === 'SKIP_WAITING') {
+		self.skipWaiting();
+	}
+});
+
 self.addEventListener('fetch', (event) => {
 	const { request } = event;
 	if (request.method !== 'GET') return;
@@ -27,7 +28,7 @@ self.addEventListener('fetch', (event) => {
 	const url = new URL(request.url);
 	if (url.origin !== self.location.origin) return;
 
-	// Páginas HTML: rede primeiro, para o nome/textos atualizarem
+	// Páginas HTML: rede primeiro, para textos/letras atualizarem
 	const isPage = request.mode === 'navigate' || request.headers.get('accept')?.includes('text/html');
 	if (isPage) {
 		event.respondWith(

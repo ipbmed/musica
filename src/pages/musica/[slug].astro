@@ -4,7 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SongHeader from '../../components/SongHeader.astro';
 import MusicianPanel from '../../components/MusicianPanel.astro';
 import RepertoireBar from '../../components/RepertoireBar.astro';
-import { withBase } from '../../lib/paths';
+import { resolveHref, withBase } from '../../lib/paths';
 
 export async function getStaticPaths() {
 	const songs = await getCollection('songs');
@@ -71,7 +71,7 @@ const songs = (await getCollection('songs'))
 			song.data.links.length > 0 && (
 				<nav class="links" aria-label="Links da música">
 					{song.data.links.map((link) => (
-						<a href={link.url} target="_blank" rel="noopener noreferrer">
+						<a href={resolveHref(link.url)} target="_blank" rel="noopener noreferrer">
 							{link.label}
 						</a>
 					))}
@@ -93,5 +93,7 @@ const songs = (await getCollection('songs'))
 
 <script>
 	import { initFavoriteToggles } from '../../scripts/favorites';
+	import { initLyricsChorus } from '../../scripts/lyricsChorus';
 	initFavoriteToggles();
+	initLyricsChorus();
 </script>

@@ -18,6 +18,7 @@ export function setMusicianMode(on: boolean, options: { toast?: boolean } = {}) 
 	}
 	document.documentElement.dataset.musician = on ? 'on' : 'off';
 	syncToggle(on);
+	document.dispatchEvent(new CustomEvent('musician:mode-change', { detail: { on } }));
 
 	if (options.toast) {
 		showToast(on ? 'Modo músico ativado' : 'Modo músico desativado');

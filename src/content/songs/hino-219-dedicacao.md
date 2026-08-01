@@ -4,6 +4,32 @@ kind: hino
 number: 219
 tags: ["novo-cantico"]
 links: []
+versions:
+  - id: original
+    label: "Original"
+    instructions:
+      - "Verso 1"
+      - "Verso 2"
+      - "Verso 3"
+    links: []
+    lyrics: |
+      > Verso 1
+      Sofreste, ó meu Senhor, na amarga cruz,
+      E derramaste ali teu sangue a flux;
+      Que resgatou minha alma dos pecados meus
+      E deu-me o céu de luz!
+
+      > Verso 2
+      Agora, ó Salvador, quero te honrar,
+      E, enquanto aqui viver, sempre te amar!
+      E dando provas desse amor, meu coração
+      Desejo consagrar.
+
+      > Verso 3
+      Aceita, ó terno Deus, a adoração
+      Que oferto a ti, Senhor, com devoção.
+      Deponho, então, a teus pés, para sempre, ó Pai,
+      A eterna gra-tidão. Amém.
 ---
 
 Sofreste, ó meu Senhor, na amarga cruz,

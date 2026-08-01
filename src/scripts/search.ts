@@ -4,7 +4,6 @@ import {
 	initFavoriteToggles,
 	loadFavorites,
 	moveFavorite,
-	removeFavorite,
 } from './favorites';
 import { consumeSharedRepertoire, shareCurrentRepertoire } from './shareRepertoire';
 
@@ -40,7 +39,7 @@ export function initSongSearch() {
 	let letter: LetterFilter = 'todos';
 	let sort: SortMode =
 		(sortButtons.find((button) => button.getAttribute('aria-pressed') === 'true')?.dataset.sortMode as SortMode) ||
-		'numero';
+		'titulo';
 	let favoritesOnly = favFilterBtn?.getAttribute('aria-pressed') === 'true';
 
 	try {
@@ -194,7 +193,7 @@ export function initSongSearch() {
 
 	for (const button of sortButtons) {
 		button.addEventListener('click', () => {
-			sort = (button.dataset.sortMode as SortMode) || 'numero';
+			sort = (button.dataset.sortMode as SortMode) || 'titulo';
 			for (const other of sortButtons) {
 				other.setAttribute('aria-pressed', String(other === button));
 			}
@@ -227,13 +226,6 @@ export function initSongSearch() {
 		if (down) {
 			const id = down.closest<HTMLElement>('[data-song-item]')?.dataset.songId;
 			if (id) moveFavorite(id, 1);
-			return;
-		}
-
-		const remove = target.closest<HTMLButtonElement>('[data-fav-remove]');
-		if (remove) {
-			const id = remove.closest<HTMLElement>('[data-song-item]')?.dataset.songId;
-			if (id) removeFavorite(id, { toast: true });
 		}
 	});
 

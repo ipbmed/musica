@@ -4,10 +4,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { withBase } from '../lib/paths';
 
 const songs = (await getCollection('songs')).sort((a, b) => {
+	const byTitle = a.data.title.localeCompare(b.data.title, 'pt-BR');
+	if (byTitle !== 0) return byTitle;
 	const aNum = a.data.number ?? Number.POSITIVE_INFINITY;
 	const bNum = b.data.number ?? Number.POSITIVE_INFINITY;
-	if (aNum !== bNum) return aNum - bNum;
-	return a.data.title.localeCompare(b.data.title, 'pt-BR');
+	return aNum - bNum;
 });
 
 const alphabet = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
@@ -74,8 +75,8 @@ const homeHref = withBase();
 			</div>
 
 			<div class="sort-filters" role="group" aria-label="Ordenar por">
-				<button type="button" class="filter-btn" data-sort-mode="numero" aria-pressed="true">Número</button>
-				<button type="button" class="filter-btn" data-sort-mode="titulo" aria-pressed="false">Título</button>
+				<button type="button" class="filter-btn" data-sort-mode="numero" aria-pressed="false">Número</button>
+				<button type="button" class="filter-btn" data-sort-mode="titulo" aria-pressed="true">Título</button>
 			</div>
 
 			<div class="letter-filters" role="group" aria-label="Filtrar por letra">
@@ -170,9 +171,6 @@ const homeHref = withBase();
 							</button>
 							<button type="button" class="fav-order-btn" data-fav-down aria-label="Descer no repertório">
 								↓
-							</button>
-							<button type="button" class="fav-order-btn fav-order-btn--remove" data-fav-remove aria-label="Remover do repertório">
-								✕
 							</button>
 						</div>
 					</li>

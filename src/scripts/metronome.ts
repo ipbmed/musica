@@ -109,5 +109,9 @@ export function initMetronome() {
 		if (playing) stop();
 	}) as EventListener);
 
+	document.addEventListener('musician:mode-change', ((event: CustomEvent<{ on: boolean }>) => {
+		if (!event.detail?.on && playing) stop();
+	}) as EventListener);
+
 	syncLabel();
 }

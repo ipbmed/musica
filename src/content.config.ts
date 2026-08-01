@@ -4,7 +4,8 @@ import { z } from 'astro/zod';
 
 const linkSchema = z.object({
 	label: z.string(),
-	url: z.string().url(),
+	/** URL absoluta (https://…) ou caminho relativo ao site (ex.: files/partitura.pdf). */
+	url: z.string().min(1),
 });
 
 const versionSchema = z.object({
